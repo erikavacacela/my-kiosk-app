@@ -14,7 +14,7 @@
         "name": "Flutter",
         "type": "dart",
         "request": "launch",
-        "program": "lib/main.dart"
+        "program": "buy_kiosko/lib/main.dart"
     }
     ]
 }
