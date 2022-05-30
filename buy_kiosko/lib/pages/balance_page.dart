@@ -1,17 +1,15 @@
-import 'package:buy_kiosko/clients/account_client.dart';
 import 'package:flutter/material.dart';
 
 class BalancePage extends StatefulWidget {
-  BalancePage() : super();
+  BalancePage({required this.amount}) : super();
+
+  final String amount;
 
   @override
   _BalancePageState createState() => _BalancePageState();
 }
 
 class _BalancePageState extends State<BalancePage> {
-  AccountClient accountClient = AccountClient();
-  String _amount = "0,00";
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,23 +20,16 @@ class _BalancePageState extends State<BalancePage> {
         MaterialButton(
           color: Colors.blue,
           shape: const CircleBorder(),
-          onPressed: () {},
+          onPressed: () => {},
           child: Padding(
             padding: EdgeInsets.all(100),
             child: Text(
-              '\$ $_amount',
+              '\$ ${widget.amount}',
               style: TextStyle(color: Colors.white, fontSize: 24),
             ),
           ),
         ),
       ]),
     );
-  }
-
-  Future<void> updateAmount() async {
-    Map response = await accountClient.findByCurrentUser();
-    if (response['id'] != null) {
-      _amount = response['amount'];
-    }
   }
 }

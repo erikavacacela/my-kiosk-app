@@ -1,3 +1,4 @@
+import 'package:buy_kiosko/clients/account_client.dart';
 import 'package:buy_kiosko/pages/balance_page.dart';
 import 'package:buy_kiosko/pages/collect_page.dart';
 import 'package:buy_kiosko/pages/scan_qr_page.dart';
@@ -13,8 +14,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static AccountClient accountClient = AccountClient();
   static List<Widget> _pageList = <Widget>[
-    BalancePage(),
+    BalancePage(amount: "0.00"),
     ScanQRPage(),
     CollectPage()
   ];
@@ -61,7 +63,21 @@ class _HomePageState extends State<HomePage> {
           setState(() {
             _selectedIndex = index;
             print('Selected index: ${_selectedIndex}');
+            if (index == 0) {
+              updateAmount();
+            }
           });
         });
+  }
+
+  Future<void> updateAmount() async {
+    Map response = await accountClient.findByCurrentUser();
+    if (response['id'] != null) {
+      setState(() {
+        var currentAmount = response['amount'].toString();
+        _pageList[0] = BalancePage(amount: currentAmount);
+        print('New amount: \$ $currentAmount');
+      });
+    }
   }
 }
