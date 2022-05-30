@@ -1,6 +1,8 @@
 import 'package:buy_kiosko/clients/account_client.dart';
+import 'package:buy_kiosko/clients/transaction_client.dart';
 import 'package:buy_kiosko/pages/balance_page.dart';
 import 'package:buy_kiosko/pages/collect_page.dart';
+import 'package:buy_kiosko/pages/historic_page.dart';
 import 'package:buy_kiosko/pages/scan_qr_page.dart';
 import 'package:flutter/material.dart';
 
@@ -15,10 +17,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static AccountClient accountClient = AccountClient();
+  static TransactionClient transactionClient = TransactionClient();
   static List<Widget> _pageList = <Widget>[
     BalancePage(amount: "0.00"),
     ScanQRPage(),
-    CollectPage()
+    CollectPage(),
+    HistoricalPage(historicList: [])
   ];
   int _selectedIndex = 0;
 
@@ -66,6 +70,9 @@ class _HomePageState extends State<HomePage> {
             if (index == 0) {
               updateAmount();
             }
+            if (index == 3) {
+              getHistoricalTransactions();
+            }
           });
         });
   }
@@ -77,6 +84,15 @@ class _HomePageState extends State<HomePage> {
         var currentAmount = response['amount'].toString();
         _pageList[0] = BalancePage(amount: currentAmount);
         print('New amount: \$ $currentAmount');
+      });
+    }
+  }
+
+  Future<void> getHistoricalTransactions() async {
+    Map response = await transactionClient.transactionByAccountId();
+    if (response['transactions'] != null) {
+      setState(() {
+        _pageList[3] = HistoricalPage(historicList: response['transactions']);
       });
     }
   }

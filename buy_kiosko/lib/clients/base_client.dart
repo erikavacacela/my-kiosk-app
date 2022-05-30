@@ -18,8 +18,7 @@ class BaseClient {
           encoding: Encoding.getByName("utf-8"));
       print('... End post request...');
       print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-
+      // print('Response body: ${response.body}');
       return response.bodyBytes.isEmpty
           ? <String, dynamic>{}
           : jsonDecode(utf8.decode(response.bodyBytes)) as Map;
@@ -43,7 +42,7 @@ class BaseClient {
       });
       print('... End post request...');
       print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Response body: ${response.body}');
       return response.bodyBytes.isEmpty
           ? <String, dynamic>{}
           : jsonDecode(utf8.decode(response.bodyBytes)) as Map;

@@ -14,4 +14,10 @@ class TransactionClient extends BaseClient {
     };
     return this.post(EndPoints.PAYMENT, mapData);
   }
+
+  Future<Map> transactionByAccountId() async {
+    String url =
+        '${EndPoints.TRANSACTION_BY_ACCOUNT_ID}${globals.currentUser['accountId']}';
+    return this.get(url);
+  }
 }
