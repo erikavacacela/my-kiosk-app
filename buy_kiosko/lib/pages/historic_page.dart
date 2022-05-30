@@ -23,6 +23,17 @@ class _HistoricalPageState extends State<HistoricalPage> {
   Widget build(BuildContext context) {
     _selectedList =
         List<bool>.generate(widget.historicList.length, (_) => true);
+    if (_selectedList.length == 0) {
+      return ListView.builder(
+          itemCount: 1,
+          itemBuilder: (_, int index) {
+            return ListTile(
+                leading: Icon(Icons.info_rounded),
+                title: Text('No hay registros.'),
+                subtitle: Text(''));
+            ;
+          });
+    }
     return ListView.builder(
         itemCount: widget.historicList.length,
         itemBuilder: (_, int index) {

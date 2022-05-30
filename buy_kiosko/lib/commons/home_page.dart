@@ -27,6 +27,13 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
   @override
+  void initState() {
+    print("... initState ...");
+    this.updateAmount();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
